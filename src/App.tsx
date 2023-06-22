@@ -123,6 +123,7 @@ function App() {
               key={key}
               className={`drum-button ${keyAnimation === key ? "active" : ""}`}
               onClick={() => handleButtonClick(key as Keys)}
+              onTouchStart={() => handleButtonClick(key as Keys)}
             >
               {partsMap[key as Keys]}
             </button>
