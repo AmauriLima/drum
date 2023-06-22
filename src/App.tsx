@@ -2,6 +2,26 @@ import { useEffect, useState,  } from 'react'
 import './App.css'
 import './DrumKit.css'
 
+import a from "./sounds/kick-01.wav";
+import s from "./sounds/snare-01.wav";
+import d from "./sounds/tom-01.wav";
+import f from "./sounds/tom-02.wav";
+import g from "./sounds/tom-03.wav";
+import h from "./sounds/hihat-closed.wav";
+import j from "./sounds/crash-01.wav";
+import k from "./sounds/ride-01.wav";
+
+const soundMap: KeysSounds = {
+  a,
+  s,
+  d,
+  f,
+  g,
+  h,
+  j,
+  k,
+};
+
 type Keys = 'a' | 's' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k';
 type KeysSounds = {[key in Keys]: string}
 type PartsOfDrum = {[key in Keys]: string};
@@ -24,19 +44,8 @@ function App() {
     const handleKeyPress = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase() as  Keys;
 
-      const soundMap: KeysSounds = {
-        a: "kick-01.wav",
-        s: "snare-01.wav",
-        d: "tom-01.wav",
-        f: "tom-02.wav",
-        g: "tom-03.wav",
-        h: "hihat-closed.wav",
-        j: "crash-01.wav",
-        k: "ride-01.wav",
-      };
-
       if (key in soundMap) {
-        playSound(soundMap[key]);
+        playSound(key);
         setKeyAnimation(key);
       }
     };
@@ -61,8 +70,8 @@ function App() {
     return Math.floor(Math.random() * 20) + 30;
   };
 
-  const playSound = (sound: string) => {
-    const audioElement = new Audio(`src/sounds/${sound}`);
+  const playSound = (key: Keys) => {
+    const audioElement = new Audio(soundMap[key]);
     audioElement.play();
   };
 
@@ -71,19 +80,8 @@ function App() {
   };
 
   const handleButtonClick = (key: Keys) => {
-    const soundMap: KeysSounds = {
-      a: "kick-01.wav",
-      s: "snare-01.wav",
-      d: "tom-01.wav",
-      f: "tom-02.wav",
-      g: "tom-03.wav",
-      h: "hihat-closed.wav",
-      j: "crash-01.wav",
-      k: "ride-01.wav",
-    };
-  
     if (key in soundMap) {
-      playSound(soundMap[key]);
+      playSound(key);
       setKeyAnimation(key);
     }
   };
@@ -123,7 +121,6 @@ function App() {
               key={key}
               className={`drum-button ${keyAnimation === key ? "active" : ""}`}
               onClick={() => handleButtonClick(key as Keys)}
-              onTouchStart={() => handleButtonClick(key as Keys)}
             >
               {partsMap[key as Keys]}
             </button>
