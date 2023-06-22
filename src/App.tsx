@@ -21,6 +21,8 @@ function App() {
   const [keyAnimation, setKeyAnimation] = useState<null | Keys>(null);
 
   useEffect(() => {
+    loadSounds();
+
     const handleKeyPress = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase() as  Keys;
 
@@ -47,6 +49,25 @@ function App() {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
+
+  const loadSounds = () => {
+    const soundMap: KeysSounds = {
+      a: 'kick-01.wav',
+      s: 'snare-01.wav',
+      d: 'tom-01.wav',
+      f: 'tom-02.wav',
+      g: 'tom-03.wav',
+      h: 'hihat-closed.wav',
+      j: 'crash-01.wav',
+      k: 'ride-01.wav',
+    };
+
+    Object.values(soundMap).forEach((sound) => {
+      const audioElement = new Audio(`/sounds/${sound}`);
+      audioElement.load();
+    });
+  };
+
 
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
